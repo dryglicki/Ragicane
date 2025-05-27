@@ -4,17 +4,18 @@ from dataclasses import dataclass
 import aiohttp
 from argparse import ArgumentParser
 
+
 @dataclass
 class NOAAConfig:
     station: str = "KJFK"
     base_url: str = "https://api.weather.gov/stations"
 
+
 class WeatherCLI:
 
     DESCRIPTION = "Ragicane: Fetch NOAA stations, then NHC PDFs."
 
-    def __init__(self,
-                 config: NOAAConfig):
+    def __init__(self, config: NOAAConfig):
         self.config = config
 
     async def fetch_observation(self):
@@ -25,8 +26,10 @@ class WeatherCLI:
                 return await resp.json()
 
     def parse_args(self):
-        p = ArgumentParser(description = self.DESCRIPTION)
-        p.add_argument('-s', '--station', default = 'KJFK', help = 'Station ID. Default: KJFK')
+        p = ArgumentParser(description=self.DESCRIPTION)
+        p.add_argument(
+            "-s", "--station", default="KJFK", help="Station ID. Default: KJFK"
+        )
         return p.parse_args()
 
     async def run(self):
@@ -36,8 +39,8 @@ class WeatherCLI:
         temp = data["properties"]["temperature"]["value"]
         print(f"{self.config.station}: {temp:0.1f} degC")
 
+
 if __name__ == "__main__":
     cfg = NOAAConfig()
     cli = WeatherCLI(cfg)
     asyncio.run(cli.run())
-
