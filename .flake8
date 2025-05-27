@@ -1,0 +1,12 @@
+[flake8]
+# Don’t bother with long lines
+ignore = E501
+
+# Exclude your venv (and any build dirs)
+exclude =
+    .venv,
+    build,
+    dist
+
+# (Optional) If you do want to enforce a softer limit:
+# max-line-length = 120

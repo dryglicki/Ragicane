@@ -1,0 +1,47 @@
+name: ragicane CI
+
+# Trigger on pushes & PRs to develop/main
+on:
+  push:
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11, 3.12]
+
+    steps:
+      # 1. Check out your code
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 2. Set up the specified Python version
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # 3. Install uv into the runner’s environment
+      - name: Install uv
+        run: pip install uv
+
+      # 4. Sync project dependencies
+      - name: Sync virtualenv
+        run: uv sync
+
+      # 5. Run Black in “check” mode
+      - name: Lint with Black
+        run: uv run -- black --check .
+
+      # 6. Run Flake8
+      - name: Lint with Flake8
+        run: uv run -- flake8 .
+
+      # 7. Execute tests
+      - name: Run pytest
+        run: uv run -- pytest -q
+
