@@ -1,0 +1,14 @@
+[project]
+name = "ragicane"
+version = "0.1.0"
+description = "Read Tropical Storm discussions from NHC and talk to them"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohttp>=3.12.2",
+    "aioresponses>=0.7.8",
+    "black>=25.1.0",
+    "flake8>=7.2.0",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=1.0.0",
+]
