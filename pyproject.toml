@@ -12,3 +12,7 @@ dependencies = [
     "pytest>=8.3.5",
     "pytest-asyncio>=1.0.0",
 ]
+[tool.flake8]
+ignore = ["E501"]
+exclude = [".venv", "build", "dist"]
+# max-line-length = 120
