@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import sys
-import os
 
 import asyncio
 from dataclasses import dataclass
@@ -28,7 +27,7 @@ class WeatherCLI:
 
     async def fetch_observation(
         self, session: aiohttp.ClientSession, station: str
-    ) -> Optional[float]:
+    ) -> Optional[List]:
         url = f"{self.config.base_url}/{station}/observations/latest"
         try:
             async with aiohttp.ClientSession() as session:
