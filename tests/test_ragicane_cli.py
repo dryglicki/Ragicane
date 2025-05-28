@@ -13,7 +13,7 @@ async def test_fetch_observation_success():
         "properties": {
             "temperature": {"value": 15.0},
             "dewpoint": {"value": 10.0},
-            "relativeHumidity": {"value": 55.0}
+            "relativeHumidity": {"value": 55.0},
         }
     }
     cfg = NOAAConfig()
@@ -49,6 +49,7 @@ async def test_run_output_celsius(monkeypatch, capsys):
     # Fake fetch_observation to return known tuple
     async def fake_fetch(self, session, station):
         return (12.3, 6.7, 90.12)
+
     monkeypatch.setattr(WeatherCLI, "fetch_observation", fake_fetch)
 
     cli = WeatherCLI(NOAAConfig())
@@ -68,6 +69,7 @@ async def test_run_output_fahrenheit(monkeypatch, capsys):
     # Fake fetch_observation: returns 0°C for temp, None for dewpoint & RH
     async def fake_fetch(self, session, station):
         return (0.0, None, None)
+
     monkeypatch.setattr(WeatherCLI, "fetch_observation", fake_fetch)
 
     cli = WeatherCLI(NOAAConfig())
