@@ -5,13 +5,14 @@ from aioresponses import aioresponses
 
 from ragicane_cli import WeatherCLI, NOAAConfig
 
+
 @pytest.mark.asyncio
 async def test_fetch_observation_success():
     # Prepare a full mock with temperature, dewpoint, and relative humidity
     mock_payload = {
         "properties": {
-            "temperature":    {"value": 15.0},
-            "dewpoint":       {"value": 10.0},
+            "temperature": {"value": 15.0},
+            "dewpoint": {"value": 10.0},
             "relativeHumidity": {"value": 55.0}
         }
     }
@@ -25,6 +26,7 @@ async def test_fetch_observation_success():
             result = await cli.fetch_observation(session, "TEST")
             assert result == (15.0, 10.0, 55.0)
 
+
 @pytest.mark.asyncio
 async def test_fetch_observation_not_found():
     cfg = NOAAConfig()
@@ -36,6 +38,7 @@ async def test_fetch_observation_not_found():
             m.get(url, status=404)
             result = await cli.fetch_observation(session, "NO_SUCH")
             assert tuple(result) == (None, None, None)
+
 
 @pytest.mark.asyncio
 async def test_run_output_celsius(monkeypatch, capsys):
@@ -55,6 +58,7 @@ async def test_run_output_celsius(monkeypatch, capsys):
     # Expect unpadded fields and °C units
     assert "ABCD: 12.3 ˚C  6.7 ˚C  90.12 %" in out
 
+
 @pytest.mark.asyncio
 async def test_run_output_fahrenheit(monkeypatch, capsys):
     # Simulate CLI args: one station, with conversion flag
@@ -72,4 +76,3 @@ async def test_run_output_fahrenheit(monkeypatch, capsys):
     out = capsys.readouterr().out
     # 0°C → 32°F, missing dewpoint → -99.0, missing RH → -99.00
     assert "ABCD: 32.0 ˚F  -99.0 ˚F  -99.00 %" in out
-
