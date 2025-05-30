@@ -1,7 +1,7 @@
 [project]
-name = "ragicane"
+name = "ragicane.cli:main"
 version = "0.1.0"
-description = "Read Tropical Storm discussions from NHC and talk to them"
+description = "Read Tropical Storm reports from NHC and talk to them"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
