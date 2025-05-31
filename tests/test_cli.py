@@ -1,6 +1,6 @@
 import pytest
 from aioresponses import aioresponses
-from ragicane_cli import WeatherCLI, NOAAConfig
+from ragicane.cli import WeatherCLI, NOAAConfig
 
 
 @pytest.mark.asyncio

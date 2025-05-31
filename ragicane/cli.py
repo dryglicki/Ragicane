@@ -39,8 +39,10 @@ class WeatherCLI:
         temp = data["properties"]["temperature"]["value"]
         print(f"{self.config.station}: {temp:0.1f} degC")
 
-
-if __name__ == "__main__":
+def main():
     cfg = NOAAConfig()
     cli = WeatherCLI(cfg)
     asyncio.run(cli.run())
+
+if __name__ == "__main__":
+    main()
