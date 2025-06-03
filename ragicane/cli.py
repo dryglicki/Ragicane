@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import aiohttp
 from argparse import ArgumentParser
 from typing import List, Optional
-
+from datetime import datetime
 
 @dataclass
 class NOAAConfig:
@@ -83,6 +83,8 @@ class WeatherCLI:
                     else:
                         d = -99.0
                     unit = "˚F"
+                else:
+                    if d is None: d = -99.0
                 if r is None:
                     r = -99.0
                 print(
@@ -92,6 +94,7 @@ class WeatherCLI:
 def main():
     cfg = NOAAConfig()
     cli = WeatherCLI(cfg)
+    print(f"The current date is {datetime.now().strftime('%Y %B %d: %H%M UTC')}")
     asyncio.run(cli.run())
 
 if __name__ == "__main__":
