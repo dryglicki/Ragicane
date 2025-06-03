@@ -1,5 +1,5 @@
 [project]
-name = "ragicane.cli:main"
+name = "ragicane"
 version = "0.1.0"
 description = "Read Tropical Storm reports from NHC and talk to them"
 readme = "README.md"
@@ -15,6 +15,8 @@ dependencies = [
     "pytest-asyncio>=1.0.0",
     "spacy>=3.8.7",
 ]
+[tool.uv]
+package = true
 [project.scripts]
 ragicane = "ragicane.cli:main"
 [tool.flake8]
