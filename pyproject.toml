@@ -19,6 +19,9 @@ dependencies = [
 package = true
 [project.scripts]
 ragicane = "ragicane.cli:main"
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ['sample_reports']
 [tool.flake8]
 ignore = ["E501"]
 exclude = [".venv", "build", "dist"]
