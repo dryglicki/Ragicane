@@ -2,10 +2,20 @@ from typing import List
 import re
 import nltk
 import spacy
+from spacy.lang.en import English
 
-nltk.download('punkt')
+try:
+    nltk.data.find("tokenizers/punkt")
+except LookupError:
+    nltk.download("punkt")
 
-nlp = spacy.load("en_core_web_sm")
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    # model not installed, so create a blank English pipeline with only the sentencizer
+    nlp = English()
+    nlp.add_pipe("sentencizer")
+
 
 def simple_split(text: str, max_chars: int = 2000, overlap: int = 200) -> List[str]:
     """
@@ -20,7 +30,7 @@ def simple_split(text: str, max_chars: int = 2000, overlap: int = 200) -> List[s
       - List of chunks.
     """
     # Clean up whitespace
-    text = re.sub(r'\s+', ' ', text).strip()
+    text = re.sub(r"\s+", " ", text).strip()
 
     chunks = []
     start = 0
@@ -32,6 +42,7 @@ def simple_split(text: str, max_chars: int = 2000, overlap: int = 200) -> List[s
         # Step forward by chunk_size - overlap
         start += max_chars - overlap
     return chunks
+
 
 def sentence_chunk(text: str, max_words: int = 250) -> List[str]:
     """
@@ -53,6 +64,7 @@ def sentence_chunk(text: str, max_words: int = 250) -> List[str]:
         chunks.append(" ".join(current))
     return chunks
 
+
 def clean_chunks(chunks: List[str]) -> List[str]:
     cleaned = []
     for chunk in chunks:
@@ -61,4 +73,3 @@ def clean_chunks(chunks: List[str]) -> List[str]:
         sentences = [sent.text.strip() for sent in doc.sents]
         cleaned.append(" ".join(sentences))
     return cleaned
-
